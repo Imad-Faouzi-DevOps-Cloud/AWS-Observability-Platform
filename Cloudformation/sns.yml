@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: SNS topics for observability alerts
+
+Resources:
+  # Topic principal pour alertes du projet
+  ObservabilityAlertsTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: observability-alerts
+
+  # Subscription email (remplacer par ton email)
+  ObservabilityAlertsSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      Protocol: email
+      Endpoint: ton.email@exemple.com
+      TopicArn: !Ref ObservabilityAlertsTopic
+
+  # Policy du topic pour permettre à Lambda / CloudWatch de publier
+  ObservabilityAlertsTopicPolicy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      Topics:
+        - !Ref ObservabilityAlertsTopic
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          # Autoriser Lambda à publier sur ce topic
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sns:Publish
+            Resource: !Ref ObservabilityAlertsTopic
+
+          # Autoriser CloudWatch Alarms à publier sur ce topic
+          - Effect: Allow
+            Principal:
+              Service: cloudwatch.amazonaws.com
+            Action: sns:Publish
+            Resource: !Ref ObservabilityAlertsTopic
