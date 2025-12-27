@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Lambda function to process CloudWatch logs
+
+Resources:
+  LogProcessorLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: log-processor
+      Runtime: python3.9
+      Handler: log_processor.lambda_handler
+      Role: !ImportValue LambdaExecutionRoleArn
+      Timeout: 60
+      MemorySize: 256
+      Code:
+        S3Bucket: !ImportValue LambdaCodeBucket
+        S3Key: log_processor.zip
+      Environment:
+        Variables:
+          LOGS_BUCKET: !ImportValue LogsBucketName
