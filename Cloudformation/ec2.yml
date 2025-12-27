@@ -41,7 +41,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Allow SSH and HTTP
-      VpcId: !Ref MyVPC
+      VpcId: !ImportValue Observability-VPC-ID
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
