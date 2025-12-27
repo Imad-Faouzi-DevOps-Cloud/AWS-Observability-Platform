@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: OpenSearch domain for log analysis
+
+Resources:
+  # Domaine OpenSearch
+  ObservabilityOpenSearch:
+    Type: AWS::OpenSearchService::Domain
+    Properties:
+      DomainName: observability-logs
+      EngineVersion: OpenSearch_1.3
+      # Cluster avec 2 nœuds pour haute disponibilité
+      ClusterConfig:
+        InstanceType: t3.medium.search
+        InstanceCount: 2
+      # Chiffrement des données au repos
+      EBSOptions:
+        EBSEnabled: true
+        VolumeSize: 20
+      EncryptionAtRestOptions:
+        Enabled: true
+      NodeToNodeEncryptionOptions:
+        Enabled: true
+      # Accès sécurisé : IAM uniquement
+      AccessPolicies:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: "*"
+            Action: es:*
+            Resource: !Sub "arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/observability-logs/*"
+            Condition:
+              Bool:
+                aws:SecureTransport: true
