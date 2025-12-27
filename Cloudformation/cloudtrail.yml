@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudTrail for auditing AWS account
+
+Resources:
+  ObservabilityTrail:
+    Type: AWS::CloudTrail::Trail
+    Properties:
+      TrailName: observability-trail
+      S3BucketName: !ImportValue LogsBucketName
+      IsMultiRegionTrail: true
+      IncludeGlobalServiceEvents: true
+      EnableLogFileValidation: true
+      IsLogging: true
+      KmsKeyId: alias/aws/s3  # ou créer un CMK dédié
+      EventSelectors:
+        - ReadWriteType: All
+          IncludeManagementEvents: true
+          DataResources:
+            - Type: AWS::S3::Object
+              Values:
+                - !Sub "arn:aws:s3:::${LogsBucketName}/"
+
+  CloudTrailRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: CloudTrailS3Role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: cloudtrail.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
