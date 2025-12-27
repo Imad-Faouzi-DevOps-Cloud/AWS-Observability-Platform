@@ -17,3 +17,18 @@ Resources:
       Environment:
         Variables:
           LOGS_BUCKET: !ImportValue LogsBucketName
+          
+  LogProcessorLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref LogProcessorLambda
+      Action: lambda:InvokeFunction
+      Principal: logs.amazonaws.com
+      SourceArn: !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:EC2-syslog:*
+
+  CloudWatchLogSubscription:
+    Type: AWS::Logs::SubscriptionFilter
+    Properties:
+      DestinationArn: !GetAtt LogProcessorLambda.Arn
+      FilterPattern: ""
+      LogGroupName: EC2-syslog
