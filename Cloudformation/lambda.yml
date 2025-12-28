@@ -1,6 +1,11 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Lambda function to process CloudWatch logs
 
+Environment:
+  Variables:
+    LOGS_BUCKET: !ImportValue LogsBucketName
+    SNS_TOPIC_ARN: !ImportValue ObservabilityAlertsTopicArn
+
 Resources:
   LogProcessorLambda:
     Type: AWS::Lambda::Function
