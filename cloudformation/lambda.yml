@@ -29,9 +29,19 @@ Resources:
       Principal: logs.amazonaws.com
       SourceArn: !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:EC2-syslog:*
 
+  EC2SyslogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: EC2-syslog
+      RetentionInDays: 7   # économie
+
   CloudWatchLogSubscription:
     Type: AWS::Logs::SubscriptionFilter
+    DependsOn:
+      - LogProcessorLambdaPermission
+      - EC2SyslogGroup
     Properties:
       DestinationArn: !GetAtt LogProcessorLambda.Arn
       FilterPattern: ""
       LogGroupName: EC2-syslog
+
