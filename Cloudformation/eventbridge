@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: EventBridge rules for observability project
+
+Resources:
+  # Règle pour déclencher Lambda sur logs CloudWatch spécifiques
+  LogErrorRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: log-error-rule
+      Description: Trigger Lambda when logs contain ERROR
+      EventPattern:
+        source:
+          - aws.logs
+        detail-type:
+          - CloudWatch Logs Log Event
+        detail:
+          message:
+            - ERROR  # filtrage des logs
+      State: ENABLED
+      Targets:
+        - Arn: !GetAtt LogProcessorLambda.Arn  # Lambda à déclencher
+          Id: LogProcessorLambdaTarget
+
+  # Permission pour EventBridge d’invoquer la Lambda
+  EventBridgeInvokeLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref LogProcessorLambda
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt LogErrorRule.Arn
