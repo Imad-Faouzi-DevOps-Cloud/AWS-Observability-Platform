@@ -55,7 +55,7 @@ Resources:
                 Action:
                   - sns:Publish
                 Resource: "*"
-                - Effect: Allow
+              - Effect: Allow
                 Action:
                   - es:ESHttpPost
                   - es:ESHttpPut
