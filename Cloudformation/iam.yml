@@ -55,6 +55,12 @@ Resources:
                 Action:
                   - sns:Publish
                 Resource: "*"
+                - Effect: Allow
+                Action:
+                  - es:ESHttpPost
+                  - es:ESHttpPut
+                Resource: arn:aws:es:*:*:domain/observability-logs/*
+
 
   ### CLOUDTRAIL ROLE ###
   CloudTrailRole:
