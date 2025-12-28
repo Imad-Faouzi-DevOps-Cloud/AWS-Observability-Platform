@@ -8,12 +8,12 @@ Resources:
     Properties:
       TopicName: observability-alerts
 
-  # Subscription email (remplacer par ton email)
+  # Subscription email 
   ObservabilityAlertsSubscription:
     Type: AWS::SNS::Subscription
     Properties:
       Protocol: email
-      Endpoint: ton.email@exemple.com
+      Endpoint: imad.it.ops@outlook.com
       TopicArn: !Ref ObservabilityAlertsTopic
 
   # Policy du topic pour permettre à Lambda / CloudWatch de publier
