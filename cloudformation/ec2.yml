@@ -18,7 +18,6 @@ Resources:
           yum install -y amazon-cloudwatch-agent
           /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
             -a fetch-config -m ec2 -c file:/etc/cloudwatch-agent.json -s
-
   EC2Role:
     Type: AWS::IAM::InstanceProfile
     Properties:
