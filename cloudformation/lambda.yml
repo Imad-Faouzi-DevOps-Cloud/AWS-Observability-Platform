@@ -35,6 +35,7 @@ Resources:
       LogGroupName: EC2-syslog
       RetentionInDays: 7   # économie
 
+
   CloudWatchLogSubscription:
     Type: AWS::Logs::SubscriptionFilter
     DependsOn:
