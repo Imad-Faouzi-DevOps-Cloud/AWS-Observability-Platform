@@ -25,7 +25,7 @@ Resources:
       MapPublicIpOnLaunch: false
       AvailabilityZone: !Select [0, !GetAZs '']
 
-      Outputs:
+Outputs:
         ObservabilityVPCId:
           Description: VPC ID for Observability project
           Value: !Ref MyVPC
