@@ -5,9 +5,9 @@ Resources:
   EC2Instance:
     Type: AWS::EC2::Instance
     Properties:
-      InstanceType: t3.medium
-      ImageId: ami-0abcdef1234567890 # à remplacer par l'AMI Ubuntu 20.04
-      KeyName: my-keypair          # à créer sur AWS
+      InstanceType: t3.micro
+      ImageId: ami-0771b6766e1e61632
+      KeyName: observability-key          
       IamInstanceProfile: !Ref EC2Role
       SecurityGroupIds:
         - !Ref EC2SecurityGroup
