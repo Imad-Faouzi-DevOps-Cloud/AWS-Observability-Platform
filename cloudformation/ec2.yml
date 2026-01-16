@@ -7,7 +7,7 @@ Resources:
     Properties:
       InstanceType: t2.micro
       ImageId: ami-0771b6766e1e61632
-      KeyName: RSA2          
+      KeyName: rsa3          
       IamInstanceProfile: !Ref EC2Role
       SecurityGroupIds:
         - !Ref EC2SecurityGroup
