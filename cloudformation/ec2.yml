@@ -7,7 +7,7 @@ Resources:
     Properties:
       InstanceType: t2.micro
       ImageId: ami-0771b6766e1e61632
-      KeyName: observability-key          
+      KeyName: RSA2          
       IamInstanceProfile: !Ref EC2Role
       SecurityGroupIds:
         - !Ref EC2SecurityGroup
