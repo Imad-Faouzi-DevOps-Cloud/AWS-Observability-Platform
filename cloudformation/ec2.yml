@@ -5,7 +5,7 @@ Resources:
   EC2Instance:
     Type: AWS::EC2::Instance
     Properties:
-      InstanceType: t3.medium
+      InstanceType: t2.micro
       ImageId: ami-0771b6766e1e61632
       KeyName: observability-key          
       IamInstanceProfile: !Ref EC2Role
