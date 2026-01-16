@@ -9,6 +9,13 @@ Resources:
         - Key: Name
           Value: ObservabilityVPC
 
+  Outputs:
+  ObservabilityVPCId:
+    Description: VPC ID for Observability project
+    Value: !Ref VPC
+    Export:
+      Name: Observability-VPC-ID
+
   PublicSubnet:
     Type: AWS::EC2::Subnet
     Properties:
