@@ -8,12 +8,6 @@ Resources:
       Tags:
         - Key: Name
           Value: ObservabilityVPC
-      Outputs:
-        ObservabilityVPCId:
-          Description: VPC ID for Observability project
-          Value: !Ref VPC
-          Export:
-            Name: Observability-VPC-ID
             
   PublicSubnet:
     Type: AWS::EC2::Subnet
@@ -30,3 +24,10 @@ Resources:
       CidrBlock: 10.0.2.0/24
       MapPublicIpOnLaunch: false
       AvailabilityZone: !Select [0, !GetAZs '']
+
+      Outputs:
+        ObservabilityVPCId:
+          Description: VPC ID for Observability project
+          Value: !Ref MyVPC
+          Export:
+            Name: Observability-VPC-ID
