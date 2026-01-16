@@ -26,8 +26,8 @@ Resources:
       AvailabilityZone: !Select [0, !GetAZs '']
 
 Outputs:
-        ObservabilityVPCId:
-          Description: VPC ID for Observability project
-          Value: !Ref MyVPC
-          Export:
-            Name: Observability-VPC-ID
+  ObservabilityVPCId:
+  Description: VPC ID for Observability project
+  Value: !Ref MyVPC
+  Export:
+    Name: Observability-VPC-ID
